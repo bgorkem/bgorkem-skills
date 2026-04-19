@@ -50,7 +50,7 @@ cp -r bgorkem-skills/skills/obsidian-archive /path/to/project/.claude/skills/
 
 ### Dependencies
 
-Each skill declares its dependencies in the `compatibility` field of its `SKILL.md` frontmatter. Check that field before installing — some skills require specific MCP servers, plugins, or local tools to function.
+Each skill documents its dependencies in a `Requirements` section inside its `SKILL.md`. Check that section before installing — some skills require specific MCP servers, plugins, or local tools to function.
 
 ## What is a skill?
 

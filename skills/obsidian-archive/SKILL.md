@@ -1,12 +1,6 @@
 ---
 name: obsidian-archive
 description: Distils the current conversation into a concise reference note and saves it to the user's Obsidian vault in a configurable archive folder. Requires the mcp-obsidian MCP server. Use when the user asks to archive, save, log, capture, or file away the current conversation/chat/session — e.g., "archive this conversation", "save this to my vault", "add this to Obsidian", "remember this for later". Do not use for saving arbitrary content the user has pasted in.
-compatibility: Requires the mcp-obsidian MCP server (MarkusPfundstein/mcp-obsidian) connected to an Obsidian vault with the Local REST API community plugin enabled. Obsidian must be running. Tools used: mcp-obsidian:obsidian_list_files_in_dir, mcp-obsidian:obsidian_append_content, mcp-obsidian:obsidian_get_file_contents.
-license: MIT
-metadata:
-  author: Bulent Gorkem
-  version: 1.3.0
-  mcp-server: mcp-obsidian
 ---
 
 # Obsidian Archive
@@ -36,6 +30,12 @@ Trigger on any of:
 - "Remember this for later", "turn this into a note"
 
 If the user's intent is ambiguous (e.g. "save this" could mean saving a file they uploaded), ask one quick clarifying question before proceeding.
+
+## Requirements
+
+- The [`mcp-obsidian`](https://github.com/MarkusPfundstein/mcp-obsidian) MCP server, connected to the user's Obsidian vault.
+- The **Local REST API** Obsidian community plugin, installed and enabled in that vault.
+- Obsidian running while the skill is used (the REST API needs the app to be open).
 
 ## Dependencies
 
