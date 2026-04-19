@@ -1,11 +1,11 @@
 ---
 name: obsidian-archive
 description: Distils the current conversation into a concise reference note and saves it to the user's Obsidian vault in a configurable archive folder. Requires the mcp-obsidian MCP server. Use when the user asks to archive, save, log, capture, or file away the current conversation/chat/session — e.g., "archive this conversation", "save this to my vault", "add this to Obsidian", "remember this for later". Do not use for saving arbitrary content the user has pasted in.
-compatibility: Requires the mcp-obsidian MCP server (MarkusPfundstein/mcp-obsidian) connected to an Obsidian vault with the Local REST API community plugin enabled. Obsidian must be running. Tools used: obsidian_list_files_in_dir, obsidian_append_content, obsidian_get_file_contents.
+compatibility: Requires the mcp-obsidian MCP server (MarkusPfundstein/mcp-obsidian) connected to an Obsidian vault with the Local REST API community plugin enabled. Obsidian must be running. Tools used: mcp-obsidian:obsidian_list_files_in_dir, mcp-obsidian:obsidian_append_content, mcp-obsidian:obsidian_get_file_contents.
 license: MIT
 metadata:
   author: Bulent Gorkem
-  version: 1.2.0
+  version: 1.3.0
   mcp-server: mcp-obsidian
 ---
 
@@ -41,11 +41,13 @@ If the user's intent is ambiguous (e.g. "save this" could mean saving a file the
 
 This skill orchestrates tools from the `mcp-obsidian` MCP server. If these aren't loaded into context, call `tool_search(query="obsidian")` first to load them.
 
+Tool names below use the fully qualified `ServerName:tool_name` form per Anthropic's [best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices#mcp-tool-references). This skill assumes the server is registered in the MCP client as `mcp-obsidian`. If it's registered under a different name in your config, substitute that name for the `mcp-obsidian:` prefix everywhere below.
+
 | Tool | Purpose |
 | --- | --- |
-| `obsidian_list_files_in_dir` | Check for filename collisions inside `<archive_folder>` |
-| `obsidian_append_content` | Create the note (creates the file and parent folders if they don't exist) |
-| `obsidian_get_file_contents` | Read existing archive when the user wants to update it |
+| `mcp-obsidian:obsidian_list_files_in_dir` | Check for filename collisions inside `<archive_folder>` |
+| `mcp-obsidian:obsidian_append_content` | Create the note (creates the file and parent folders if they don't exist) |
+| `mcp-obsidian:obsidian_get_file_contents` | Read existing archive when the user wants to update it |
 
 If the MCP server isn't connected, stop and tell the user — don't fall back to a different vault location or save strategy.
 
@@ -61,9 +63,9 @@ Format: `YYYY-MM-DD - <slug>.md`
   - `2026-04-19 - nestjs-bullmq-rate-limiter.md`
 - Avoid generic slugs like `chat`, `conversation`, `discussion`.
 
-Before writing, call `obsidian_list_files_in_dir(dirpath="<archive_folder>")` (substitute the configured value) to check for collisions. If the exact filename exists, append `-2`, `-3`, etc.
+Before writing, call `mcp-obsidian:obsidian_list_files_in_dir(dirpath="<archive_folder>")` (substitute the configured value) to check for collisions. If the exact filename exists, append `-2`, `-3`, etc.
 
-If the folder doesn't exist yet, `obsidian_append_content` will create it — no need to create it separately.
+If the folder doesn't exist yet, `mcp-obsidian:obsidian_append_content` will create it — no need to create it separately.
 
 ### Step 2: Build the note content
 
@@ -114,7 +116,7 @@ Add brief context above each block if needed (one line).
 
 ### Step 3: Save via MCP
 
-Call `obsidian_append_content` with:
+Call `mcp-obsidian:obsidian_append_content` with:
 
 - `filepath`: `<archive_folder>/YYYY-MM-DD - <slug>.md`
 - `content`: the full markdown from step 2
@@ -138,9 +140,9 @@ Example: "Saved to `<archive_folder>/2026-04-19 - obsidian-cli-move-files.md` �
 **Context:** A 25-turn conversation about moving files in Obsidian via CLI, culminating in a working two-step command. Configured `archive_folder` is `AI/Conversations/`.
 
 **Actions:**
-1. `obsidian_list_files_in_dir(dirpath="AI/Conversations")` → no collision.
+1. `mcp-obsidian:obsidian_list_files_in_dir(dirpath="AI/Conversations")` → no collision.
 2. Build note with slug `obsidian-cli-move-files`, tags `[conversation, obsidian, cli, mcp]`, TL;DR summarising the CLI-vs-MCP tradeoff, a Key Decisions section listing the `fileManager.renameFile` insight, a Code block with the working two-step command, and a Follow-ups entry to wrap it in a zsh function.
-3. `obsidian_append_content(filepath="AI/Conversations/2026-04-19 - obsidian-cli-move-files.md", content=<markdown>)`.
+3. `mcp-obsidian:obsidian_append_content(filepath="AI/Conversations/2026-04-19 - obsidian-cli-move-files.md", content=<markdown>)`.
 
 **Result:** "Saved to `AI/Conversations/2026-04-19 - obsidian-cli-move-files.md` — covers the CLI move pattern with backlink updates."
 
@@ -157,19 +159,19 @@ Example: "Saved to `<archive_folder>/2026-04-19 - obsidian-cli-move-files.md` �
 **User says:** "Add today's findings to yesterday's conversation note."
 
 **Actions:**
-1. `obsidian_list_files_in_dir(dirpath="<archive_folder>")` to find the most recent matching file.
-2. `obsidian_get_file_contents` to confirm it exists and read context.
-3. `obsidian_append_content` with a new `## Update 2026-04-19` section containing today's additions — don't rewrite the existing content.
+1. `mcp-obsidian:obsidian_list_files_in_dir(dirpath="<archive_folder>")` to find the most recent matching file.
+2. `mcp-obsidian:obsidian_get_file_contents` to confirm it exists and read context.
+3. `mcp-obsidian:obsidian_append_content` with a new `## Update 2026-04-19` section containing today's additions — don't rewrite the existing content.
 
 ## Edge cases
 
 - **Multiple distinct topics.** If the conversation genuinely covered unrelated subjects, offer to save two separate notes rather than one Frankenstein file. One file per conversation is the default, but topic coherence matters more.
 - **User asks for a different location/format for this call.** Respect the override for that call, but don't treat it as a permanent change — permanent changes belong in the Configuration section of this file.
-- **Configured folder doesn't exist yet.** That's fine — `obsidian_append_content` will create it (and any missing parents) on first write. No pre-creation step needed.
+- **Configured folder doesn't exist yet.** That's fine — `mcp-obsidian:obsidian_append_content` will create it (and any missing parents) on first write. No pre-creation step needed.
 
 ## Troubleshooting
 
-**Error: `404 Not Found` from obsidian_append_content**
+**Error: `404 Not Found` from mcp-obsidian:obsidian_append_content**
 Cause: Obsidian isn't running, or the Local REST API plugin is disabled/misconfigured.
 Solution: Ask the user to confirm Obsidian is open and the Local REST API plugin is enabled. Don't retry blindly.
 
