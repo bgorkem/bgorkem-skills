@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Packaged skill uploads (generated locally for Claude.ai, not source)
+*.zip
