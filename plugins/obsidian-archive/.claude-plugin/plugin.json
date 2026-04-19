@@ -1,0 +1,12 @@
+{
+  "name": "obsidian-archive",
+  "description": "Distils the current conversation into a concise reference note and saves it to the user's Obsidian vault in a configurable archive folder. Requires the mcp-obsidian MCP server.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Bulent Gorkem"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/bgorkem/bgorkem-skills/tree/main/plugins/obsidian-archive",
+  "repository": "https://github.com/bgorkem/bgorkem-skills",
+  "keywords": ["obsidian", "mcp", "archiving", "notes", "conversation"]
+}

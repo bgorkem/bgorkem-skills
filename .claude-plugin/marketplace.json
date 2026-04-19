@@ -1,0 +1,25 @@
+{
+  "name": "bgorkem-skills",
+  "owner": {
+    "name": "Bulent Gorkem"
+  },
+  "metadata": {
+    "description": "A personal collection of Agent Skills for Claude — installable via Claude Code plugin marketplace."
+  },
+  "plugins": [
+    {
+      "name": "obsidian-archive",
+      "source": "./plugins/obsidian-archive",
+      "description": "Distils the current conversation into a concise reference note and saves it to the user's Obsidian vault in a configurable archive folder. Requires the mcp-obsidian MCP server.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Bulent Gorkem"
+      },
+      "homepage": "https://github.com/bgorkem/bgorkem-skills/tree/main/plugins/obsidian-archive",
+      "repository": "https://github.com/bgorkem/bgorkem-skills",
+      "license": "MIT",
+      "keywords": ["obsidian", "mcp", "archiving", "notes", "conversation"],
+      "category": "productivity"
+    }
+  ]
+}
