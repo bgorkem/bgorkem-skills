@@ -1,6 +1,6 @@
 ---
 name: obsidian-archive
-description: Summarise the current conversation and save it as a reference note in the user's Obsidian vault, under a configurable archive folder (see the Configuration section of the skill body). Use this skill whenever the user asks to archive, save, log, remember, capture, or file away the conversation (or "this chat", "what we learned", "this session") into Obsidian. Also trigger on phrases like "save this to my vault", "add this to Obsidian", "write this up as a note", or "archive this conversation" — even if Obsidian isn't explicitly named, if the context is about persisting conversation takeaways for later reference, use this skill. Do NOT use for saving arbitrary content the user pastes in; this is specifically for distilling the live conversation.
+description: Distils the current conversation into a concise reference note and saves it to the user's Obsidian vault in a configurable archive folder. Requires the mcp-obsidian MCP server. Use when the user asks to archive, save, log, capture, or file away the current conversation/chat/session — e.g., "archive this conversation", "save this to my vault", "add this to Obsidian", "remember this for later". Do not use for saving arbitrary content the user has pasted in.
 compatibility: Requires the mcp-obsidian MCP server (MarkusPfundstein/mcp-obsidian) connected to an Obsidian vault with the Local REST API community plugin enabled. Obsidian must be running. Tools used: obsidian_list_files_in_dir, obsidian_append_content, obsidian_get_file_contents.
 license: MIT
 metadata:
