@@ -7,6 +7,7 @@ A [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-market
 | Plugin | What it does |
 | --- | --- |
 | [`obsidian-archive`](./plugins/obsidian-archive) | Distils the current conversation and saves it as a reference note in an Obsidian vault under a configurable archive folder. Requires the [mcp-obsidian](https://github.com/MarkusPfundstein/mcp-obsidian) MCP server. |
+| [`image-transform`](./plugins/image-transform) | Image conversion and transformation skills. Includes `svg-to-png`: converts a single SVG file to a high-resolution PNG using `rsvg-convert`. Useful for exporting diagrams to platforms that don't render SVG inline (Medium, Notion, slide decks). |
 
 More skills will be added over time.
 
@@ -17,12 +18,18 @@ More skills will be added over time.
 ├── .claude-plugin/
 │   └── marketplace.json                       # marketplace catalog
 ├── plugins/
-│   └── obsidian-archive/                      # one plugin per skill
+│   ├── obsidian-archive/                      # one plugin per skill
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json                    # plugin manifest
+│   │   └── skills/
+│   │       └── obsidian-archive/
+│   │           └── SKILL.md                   # the skill itself
+│   └── image-transform/
 │       ├── .claude-plugin/
-│       │   └── plugin.json                    # plugin manifest
+│       │   └── plugin.json
 │       └── skills/
-│           └── obsidian-archive/
-│               └── SKILL.md                   # the skill itself
+│           └── svg-to-png/
+│               └── SKILL.md
 ├── LICENSE
 └── README.md
 ```
