@@ -25,7 +25,7 @@
       "name": "image-transform",
       "source": "./plugins/image-transform",
       "description": "Image conversion and transformation skills (SVG to PNG and related raster operations).",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": {
         "name": "Bulent Gorkem"
       },

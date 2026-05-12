@@ -40,6 +40,7 @@ The user provides — or this skill infers from context — these values:
 | `input_path` | Yes | — | Path to the source SVG file. Can be absolute or relative to cwd. |
 | `output_path` | No | Same path as input with `.svg` replaced by `.png` | Where to write the PNG. |
 | `width` | No | `1600` | Render width in pixels. Height is computed from the SVG's aspect ratio. |
+| `background_color` | No | transparent | Any CSS color value: named (`black`, `white`), hex (`#1e1e1e`), or `rgba(r,g,b,a)`. Omit the flag entirely to keep the default transparent background. |
 
 If `input_path` is ambiguous (e.g. user says "convert my diagram" without naming a file), ask one quick clarifying question. Don't guess.
 
@@ -61,13 +62,19 @@ If `input_path` is ambiguous (e.g. user says "convert my diagram" without naming
 Execute (substituting actual values):
 
 ```bash
+# No background (transparent — default)
 rsvg-convert -w <width> "<input_path>" -o "<output_path>"
+
+# With a background color
+rsvg-convert -w <width> --background-color "<background_color>" "<input_path>" -o "<output_path>"
 ```
 
 Notes:
 - Use `-w` (width) not `-h` (height) — width is what matters for fitting a content column.
 - Use `-d` / `--dpi-x` / `--dpi-y` only if the user explicitly asks for a specific DPI. Default rendering is fine for screen use.
 - Quote both paths in case they contain spaces.
+- Only include `--background-color` when the user explicitly requests one. Omitting it leaves the background transparent, which is the correct default for SVGs that manage their own background.
+- Any CSS color value is valid: `black`, `white`, `#1e1e1e`, `rgba(30,30,30,1)`, etc.
 
 ### Step 4: Confirm to the user
 
@@ -106,7 +113,25 @@ Do **not** open or display the image — just confirm the path.
 2. Run: `rsvg-convert -w 1600 "flow.svg" -o "/Users/<user>/Desktop/flow-final.png"`
 3. Confirm: "Rendered `~/Desktop/flow-final.png` at 1600×1412 (84 KB)."
 
-### Example 4: Tool not installed
+### Example 4: Dark background
+
+**User says:** "Convert `diagram.svg` to PNG with a dark background."
+
+**Actions:**
+1. Verify input and tool.
+2. Run: `rsvg-convert -w 1600 --background-color "#1e1e1e" "diagram.svg" -o "diagram.png"`
+3. Confirm: "Rendered `diagram.png` at 1600×900 (72 KB) with a dark background (`#1e1e1e`)."
+
+### Example 5: Transparent background (explicit)
+
+**User says:** "Convert `diagram.svg` to PNG, keep the background transparent."
+
+**Actions:**
+1. Verify input and tool.
+2. Run: `rsvg-convert -w 1600 "diagram.svg" -o "diagram.png"` (omit `--background-color` entirely)
+3. Confirm: "Rendered `diagram.png` at 1600×900 (68 KB) with a transparent background."
+
+### Example 6: Tool not installed
 
 **User says:** "Convert `diagram.svg` to PNG."
 
