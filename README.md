@@ -38,6 +38,7 @@ Add this repo as a marketplace, then install the plugin you want:
 ```shell
 /plugin marketplace add bgorkem/bgorkem-skills
 /plugin install obsidian-archive@bgorkem-skills
+/plugin install image-transform@bgorkem-skills
 ```
 
 Updates are one command away:

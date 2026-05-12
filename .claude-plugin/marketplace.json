@@ -20,6 +20,20 @@
       "license": "MIT",
       "keywords": ["obsidian", "mcp", "archiving", "notes", "conversation"],
       "category": "productivity"
+    },
+    {
+      "name": "image-transform",
+      "source": "./plugins/image-transform",
+      "description": "Image conversion and transformation skills (SVG to PNG and related raster operations).",
+      "version": "0.1.0",
+      "author": {
+        "name": "Bulent Gorkem"
+      },
+      "homepage": "https://github.com/bgorkem/bgorkem-skills/tree/main/plugins/image-transform",
+      "repository": "https://github.com/bgorkem/bgorkem-skills",
+      "license": "MIT",
+      "keywords": ["image", "svg", "png", "raster", "convert"],
+      "category": "utilities"
     }
   ]
 }
